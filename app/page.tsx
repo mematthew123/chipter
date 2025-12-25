@@ -9,19 +9,19 @@ import SubmitChip from '@/components/SubmitChip';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-warm-white">
-      <Header />
-      <ScrollingBanner />
-      <main className="w-full">
-        <Hero />
-        <FeaturedReview />
-        <RecentReviews />
-        <BadgeShowcase />
-        <ChipterScale />
-        <SubmitChip />
-      </main>
-      <Footer />
-    </div>
-  );
+    return (
+        <div className='min-h-screen bg-warm-white'>
+            <Header />
+            <ScrollingBanner />
+            <main className='w-full'>
+                <Hero />
+                <FeaturedReview />
+                <RecentReviews />
+                <BadgeShowcase />
+                <ChipterScale />
+                <SubmitChip />
+            </main>
+            <Footer />
+        </div>
+    );
 }

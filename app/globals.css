@@ -1,148 +1,148 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Chipter Design System Colors */
 :root {
-  /* Primary Colors */
-  --warm-white: #FFFBEB;
-  --almost-black: #1A1A1A;
-  --hot-orange: #FF5C35;
-  --chip-yellow: #FFE566;
-  --fresh-green: #4CAF50;
-  --gray: #666666;
+    /* Primary Colors */
+    --warm-white: #fffbeb;
+    --almost-black: #1a1a1a;
+    --hot-orange: #ff5c35;
+    --chip-yellow: #ffe566;
+    --fresh-green: #4caf50;
+    --gray: #666666;
 
-  /* Applied as CSS variables for backgrounds and text */
-  --background: var(--warm-white);
-  --foreground: var(--almost-black);
+    /* Applied as CSS variables for backgrounds and text */
+    --background: var(--warm-white);
+    --foreground: var(--almost-black);
 }
 
 /* Extend Tailwind theme with custom colors */
 @theme inline {
-  /* Custom Chipter Colors */
-  --color-warm-white: #FFFBEB;
-  --color-almost-black: #1A1A1A;
-  --color-hot-orange: #FF5C35;
-  --color-chip-yellow: #FFE566;
-  --color-fresh-green: #4CAF50;
-  --color-gray: #666666;
+    /* Custom Chipter Colors */
+    --color-warm-white: #fffbeb;
+    --color-almost-black: #1a1a1a;
+    --color-hot-orange: #ff5c35;
+    --color-chip-yellow: #ffe566;
+    --color-fresh-green: #4caf50;
+    --color-gray: #666666;
 
-  /* Applied theme colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+    /* Applied theme colors */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 
-  /* Font variables */
-  --font-mono: var(--font-jetbrains);
-  --font-serif: var(--font-instrument);
-  --font-sans: var(--font-inter);
+    /* Font variables */
+    --font-mono: var(--font-jetbrains);
+    --font-serif: var(--font-instrument);
+    --font-sans: var(--font-inter);
 }
 
 /* Global styles */
 * {
-  /* margin: 0; */
-  /* padding: 0; */
-  box-sizing: border-box;
+    /* margin: 0; */
+    /* padding: 0; */
+    box-sizing: border-box;
 }
 
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), Inter, system-ui, sans-serif;
-  line-height: 1.6;
-  min-height: 100dvh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+    line-height: 1.6;
+    min-height: 100dvh;
 }
 
 /* Brutalist Design System Utilities */
 .border-brutal {
-  border: 3px solid var(--almost-black);
+    border: 3px solid var(--almost-black);
 }
 
 .shadow-brutal {
-  box-shadow: 4px 4px 0 var(--almost-black);
+    box-shadow: 4px 4px 0 var(--almost-black);
 }
 
 .shadow-brutal-hover {
-  box-shadow: 6px 6px 0 var(--almost-black);
+    box-shadow: 6px 6px 0 var(--almost-black);
 }
 
 /* Typography utilities */
 .text-headline {
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+    font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
 
 .text-score {
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
-  font-weight: 800;
-  color: var(--hot-orange);
+    font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+    font-weight: 800;
+    color: var(--hot-orange);
 }
 
 .text-label {
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+    font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .text-accent {
-  font-family: var(--font-instrument), 'Instrument Serif', serif;
-  font-style: italic;
+    font-family: var(--font-instrument), 'Instrument Serif', serif;
+    font-style: italic;
 }
 
 .text-body {
-  font-family: var(--font-inter), Inter, system-ui, sans-serif;
-  font-weight: 400;
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+    font-weight: 400;
 }
 
 /* Component styles for brutalist aesthetic */
 .card-brutal {
-  background: var(--warm-white);
-  border: 3px solid var(--almost-black);
-  padding: --spacing(6);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--warm-white);
+    border: 3px solid var(--almost-black);
+    padding: --spacing(6);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--almost-black);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--almost-black);
 }
 
 .button-brutal {
-  background: var(--hot-orange);
-  color: var(--warm-white);
-  border: 3px solid var(--almost-black);
-  padding: --spacing(3) --spacing(6);
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+    background: var(--hot-orange);
+    color: var(--warm-white);
+    border: 3px solid var(--almost-black);
+    padding: --spacing(3) --spacing(6);
+    font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
 }
 
 .button-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--almost-black);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--almost-black);
 }
 
 .button-brutal:active {
-  transform: translate(0, 0);
-  box-shadow: 0 0 0 var(--almost-black);
+    transform: translate(0, 0);
+    box-shadow: 0 0 0 var(--almost-black);
 }
 
 /* Focus styles */
 *:focus-visible {
-  outline: 3px solid var(--hot-orange);
-  outline-offset: 2px;
+    outline: 3px solid var(--hot-orange);
+    outline-offset: 2px;
 }
 
 /* Selection */
 ::selection {
-  background: var(--chip-yellow);
-  color: var(--almost-black);
+    background: var(--chip-yellow);
+    color: var(--almost-black);
 }
