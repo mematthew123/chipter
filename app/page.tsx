@@ -1,10 +1,10 @@
 import Header from '@/components/Header';
 import ScrollingBanner from '@/components/ScrollingBanner';
-import Hero from '@/components/Hero';
-import FeaturedReview from '@/components/FeaturedReview';
-import RecentReviews from '@/components/RecentReviews';
+import AnimatedHero from '@/components/AnimatedHero';
+import AnimatedFeaturedReview from '@/components/AnimatedFeaturedReview';
+import AnimatedRecentReviews from '@/components/AnimatedRecentReviews';
 import BadgeShowcase from '@/components/BadgeShowcase';
-import ChipterScale from '@/components/ChipterScale';
+import AnimatedChipterScale from '@/components/AnimatedChipterScale';
 import SubmitChip from '@/components/SubmitChip';
 import Footer from '@/components/Footer';
 
@@ -14,11 +14,11 @@ export default function Home() {
             <Header />
             <ScrollingBanner />
             <main className='w-full'>
-                <Hero />
-                <FeaturedReview />
-                <RecentReviews />
+                <AnimatedHero />
+                <AnimatedFeaturedReview />
+                <AnimatedRecentReviews />
                 <BadgeShowcase />
-                <ChipterScale />
+                <AnimatedChipterScale />
                 <SubmitChip />
             </main>
             <Footer />
