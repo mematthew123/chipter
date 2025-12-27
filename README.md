@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chipter
+
+A chip review website. Serious design. Silly subject matter.
+
+## Tech Stack
+
+- **Web**: Next.js 16, React 19, Tailwind CSS v4
+- **CMS**: Sanity Studio
+- **Package Manager**: pnpm (monorepo)
+
+## Project Structure
+
+```
+chipter/
+├── apps/
+│   ├── web/        # Next.js frontend
+│   └── studio/     # Sanity Studio CMS
+├── package.json    # Root scripts
+└── pnpm-workspace.yaml
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy the example env file and fill in your values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example apps/web/.env.local
+```
 
-## Learn More
+Required variables:
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | Sanity dataset name |
+| `RESEND_API_KEY` | Resend API key for emails |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Start the Next.js app (http://localhost:3000)
+pnpm dev
 
-## Deploy on Vercel
+# Start Sanity Studio (http://localhost:3333)
+pnpm dev:studio
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run both simultaneously in separate terminals
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Build
+
+```bash
+# Build the web app
+pnpm build
+
+# Build Sanity Studio
+pnpm build:studio
+```
+
+### Deploy
+
+```bash
+# Deploy Sanity Studio
+pnpm deploy:studio
+```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start Next.js dev server |
+| `pnpm dev:studio` | Start Sanity Studio dev server |
+| `pnpm build` | Build Next.js for production |
+| `pnpm build:studio` | Build Sanity Studio |
+| `pnpm start` | Start production Next.js server |
+| `pnpm lint` | Run ESLint on web app |
+| `pnpm deploy:studio` | Deploy Sanity Studio |
