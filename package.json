@@ -3,33 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "@react-email/components": "^1.0.2",
-    "@react-email/tailwind": "^2.0.2",
-    "@react-three/cannon": "^6.6.0",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.4.2",
-    "motion": "^12.23.26",
-    "next": "16.1.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "resend": "^6.6.0",
-    "three": "^0.182.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@types/three": "^0.182.0",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.1",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dev": "pnpm --filter @chipter/web dev",
+    "dev:web": "pnpm --filter @chipter/web dev",
+    "dev:studio": "pnpm --filter @chipter/studio dev",
+    "build": "pnpm --filter @chipter/web build",
+    "build:web": "pnpm --filter @chipter/web build",
+    "build:studio": "pnpm --filter @chipter/studio build",
+    "start": "pnpm --filter @chipter/web start",
+    "lint": "pnpm --filter @chipter/web lint",
+    "lint:web": "pnpm --filter @chipter/web lint",
+    "deploy:studio": "pnpm --filter @chipter/studio deploy"
   }
 }
