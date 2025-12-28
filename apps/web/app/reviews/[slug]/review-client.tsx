@@ -97,9 +97,17 @@ export default function ReviewPageClient({ review }: ReviewPageClientProps) {
                 <h2 className='font-mono font-bold text-2xl uppercase text-almost-black mb-4'>
                   Review Summary
                 </h2>
-                <p className='font-sans text-lg/8 text-almost-black'>
-                  {review.reviewSummary}
-                </p>
+                {review.reviewSummary && (
+                  <div className='font-sans text-lg/8 text-almost-black'>
+                    {typeof review.reviewSummary === 'string' ? (
+                      <p>{review.reviewSummary}</p>
+                    ) : Array.isArray(review.reviewSummary) ? (
+                      <PortableText value={review.reviewSummary} />
+                    ) : (
+                      <p>{String(review.reviewSummary)}</p>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Full Review Content */}
@@ -201,7 +209,7 @@ export default function ReviewPageClient({ review }: ReviewPageClientProps) {
                 )}
 
                 {review.chipProduct.isLimitedEdition && (
-                  <div className='mt-3 pt-3 border-t-[2px] border-almost-black'>
+                  <div className='mt-3 pt-3 border-t-2 border-almost-black'>
                     <span className='font-mono font-bold text-xs uppercase text-hot-orange'>
                       Limited Edition
                     </span>
@@ -209,7 +217,7 @@ export default function ReviewPageClient({ review }: ReviewPageClientProps) {
                 )}
 
                 {review.chipProduct.isDiscontinued && (
-                  <div className='mt-3 pt-3 border-t-[2px] border-almost-black'>
+                  <div className='mt-3 pt-3 border-t-2 border-almost-black'>
                     <span className='font-mono font-bold text-xs uppercase text-gray'>
                       Discontinued
                     </span>

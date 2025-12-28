@@ -140,3 +140,46 @@ function mapBadgeTier(sanityBadge?: BadgeTier): 'seismic' | 'tectonic' | 'epicen
       return null;
   }
 }
+
+// Transform function specifically for featured review
+export function transformFeaturedReview(review: any, imageUrlBuilder?: (source: any) => string) {
+  // Generate a placeholder URL if no image or imageUrlBuilder
+  let imageUrl = '';
+  if (review.chipProduct?.productImage && imageUrlBuilder) {
+    imageUrl = imageUrlBuilder(review.chipProduct.productImage);
+  } else if (review.chipProduct) {
+    // Fallback placeholder using the chip name and brand
+    const encodedName = encodeURIComponent(`${review.chipProduct.brand?.name || ''} ${review.chipProduct.name || ''}`);
+    imageUrl = `https://placehold.co/600x600/FFE566/1A1A1A?text=${encodedName}`;
+  }
+
+  // Map badge tier to the format expected by AnimatedFeaturedReviewClient
+  let badgeMapped: 'seismic-snack' | 'tectonic-crunch' | 'epicenter-elite' | 'off-the-chipter' | null = null;
+  if (review.badge) {
+    switch(review.badge) {
+      case 'off_the_chipter':
+        badgeMapped = 'off-the-chipter';
+        break;
+      case 'epicenter_elite':
+        badgeMapped = 'epicenter-elite';
+        break;
+      case 'tectonic_crunch':
+        badgeMapped = 'tectonic-crunch';
+        break;
+      case 'seismic_snack':
+        badgeMapped = 'seismic-snack';
+        break;
+    }
+  }
+
+  return {
+    id: review._id,
+    chipName: review.chipProduct?.name || '',
+    brandName: review.chipProduct?.brand?.name || '',
+    chipterScore: review.chipterScore || 0,
+    badge: badgeMapped,
+    verdict: review.oneLineVerdict || '',
+    imageUrl,
+    slug: review.slug?.current || '',
+  };
+}

@@ -38,8 +38,30 @@ const cardVariants = {
   }
 };
 
+interface TransformedReview {
+  id: string;
+  slug: string;
+  name: string;
+  brand: string;
+  flavor: string;
+  imageUrl: string;
+  scores: {
+    crunch: number;
+    flavor: number;
+    aftertaste: number;
+    seasoningDistribution: number;
+    bagToChipRatio: number;
+  };
+  overallScore: number;
+  badge: 'seismic' | 'tectonic' | 'epicenter' | 'offChipter' | null;
+  reviewText: string;
+  oneLineVerdict: string;
+  reviewDate: Date;
+  tags: string[];
+}
+
 interface AnimatedRecentReviewsClientProps {
-  reviews: any[]; // Type will match the transformed review format
+  reviews: TransformedReview[];
 }
 
 export default function AnimatedRecentReviewsClient({ reviews }: AnimatedRecentReviewsClientProps) {

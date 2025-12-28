@@ -1,15 +1,22 @@
-import { client, urlFor } from '@/lib/sanity.client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { sanityFetch } from '@/lib/sanity.live';
+import { urlFor } from '@/lib/sanity.client';
 import { recentReviewsQuery } from '@/lib/sanity.queries';
-import { SanityChipReview, transformReviewForCard } from '@/lib/sanity.types';
+import { transformReviewForCard } from '@/lib/sanity.types';
 import AnimatedRecentReviewsClient from './AnimatedRecentReviewsClient';
 
 async function fetchRecentReviews() {
   try {
-    const reviews = await client.fetch<SanityChipReview[]>(
-      recentReviewsQuery,
-      { limit: 6 }
-    );
-    return reviews.map(review => transformReviewForCard(review, (source) => urlFor(source).url()));
+    const { data: reviews } = await sanityFetch({
+      query: recentReviewsQuery,
+      params: { limit: 6 }
+    });
+
+    if (!reviews || !Array.isArray(reviews)) {
+      return [];
+    }
+
+    return reviews.map((review: any) => transformReviewForCard(review, (source) => urlFor(source).url()));
   } catch (error) {
     console.error('Error fetching recent reviews:', error);
     return [];

@@ -29,12 +29,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  // Ensure reviewSummary is a string for metadata
+  const summaryText = typeof review.reviewSummary === 'string'
+    ? review.reviewSummary
+    : Array.isArray(review.reviewSummary)
+      ? review.reviewSummary.map((block: any) =>
+          block.children?.map((child: any) => child.text).join(' ')
+        ).join(' ')
+      : '';
+
   return {
     title: review.seoTitle || `${review.chipProduct.name} Review | Chipter`,
-    description: review.seoDescription || review.reviewSummary,
+    description: review.seoDescription || summaryText,
     openGraph: {
       title: review.seoTitle || `${review.chipProduct.name} Review | Chipter`,
-      description: review.seoDescription || review.reviewSummary,
+      description: review.seoDescription || summaryText,
       images: review.chipProduct.productImage ? [urlFor(review.chipProduct.productImage).url()] : [],
     },
   };

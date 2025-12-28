@@ -63,7 +63,7 @@ export default function Footer() {
                             ABOUT CHIPTER
                         </h3>
                         <p className='font-sans text-sm text-warm-white/80 mb-4'>
-                            Professional chip criticism since 2024. We rate
+                            Professional chip criticism since 2025. We rate
                             chips on a seismic scale because snacks deserve
                             scrutiny.
                         </p>
@@ -176,7 +176,7 @@ export default function Footer() {
                 <div className='border-t-[3px] border-warm-white/20 mt-8 pt-6'>
                     <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
                         <div className='font-mono text-xs uppercase tracking-wider text-warm-white/60'>
-                            © 2024 CHIPTER. ALL CHIPS RESERVED.
+                            © 2025 CHIPTER. ALL CHIPS RESERVED.
                         </div>
                         <div className='flex gap-6'>
                             <Link
@@ -198,6 +198,17 @@ export default function Footer() {
                                 SITEMAP
                             </Link>
                         </div>
+                    </div>
+                    {/* Zephyr Link - Subtle */}
+                    <div className='mt-4 text-center'>
+                        <a
+                            href='https://zephyrpixels.dev'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='font-mono text-xs text-warm-white/40 hover:text-warm-white/60 transition-colors'
+                        >
+                            A Zephyr project
+                        </a>
                     </div>
                 </div>
             </div>

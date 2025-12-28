@@ -1,7 +1,7 @@
-import { groq } from 'next-sanity'
+import { defineQuery } from 'next-sanity'
 
 // Query for recent reviews with all necessary data
-export const recentReviewsQuery = groq`
+export const recentReviewsQuery = defineQuery(/* groq */ `
   *[_type == "chipReview"] | order(reviewDate desc) [0...$limit] {
     _id,
     title,
@@ -34,10 +34,10 @@ export const recentReviewsQuery = groq`
       slug
     }
   }
-`
+`)
 
 // Query for featured review
-export const featuredReviewQuery = groq`
+export const featuredReviewQuery = defineQuery(/* groq */ `
   *[_type == "chipReview" && isFeatured == true] | order(reviewDate desc) [0] {
     _id,
     title,
@@ -75,10 +75,10 @@ export const featuredReviewQuery = groq`
       }
     }
   }
-`
+`)
 
 // Query for all reviews
-export const allReviewsQuery = groq`
+export const allReviewsQuery = defineQuery(/* groq */ `
   *[_type == "chipReview"] | order(reviewDate desc) {
     _id,
     title,
@@ -104,10 +104,10 @@ export const allReviewsQuery = groq`
       slug
     }
   }
-`
+`)
 
 // Query for single review by slug
-export const singleReviewQuery = groq`
+export const singleReviewQuery = defineQuery(/* groq */ `
   *[_type == "chipReview" && slug.current == $slug][0] {
     _id,
     title,
@@ -172,4 +172,50 @@ export const singleReviewQuery = groq`
       description
     }
   }
-`
+`)
+
+// Query for all blog posts
+export const allBlogPostsQuery = defineQuery(/* groq */ `
+  *[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    mainImage,
+    author-> {
+      _id,
+      name,
+      slug,
+      image
+    },
+    categories[]-> {
+      _id,
+      title
+    },
+    body[_type == "block" && style == "normal"][0..2]
+  }
+`)
+
+// Query for single blog post by slug
+export const singleBlogPostQuery = defineQuery(/* groq */ `
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    mainImage,
+    author-> {
+      _id,
+      name,
+      slug,
+      bio,
+      image
+    },
+    categories[]-> {
+      _id,
+      title,
+      description
+    },
+    body
+  }
+`)

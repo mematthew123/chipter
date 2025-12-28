@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Instrument_Serif, Inter } from 'next/font/google';
+import { draftMode } from 'next/headers';
+import { VisualEditing } from 'next-sanity/visual-editing';
+import { SanityLive } from '@/lib/sanity.live';
+import { DisableDraftMode } from '@/components/DisableDraftMode';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -49,11 +53,13 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const isDraftMode = (await draftMode()).isEnabled;
+
     return (
         <html
             lang='en'
@@ -61,6 +67,13 @@ export default function RootLayout({
         >
             <body className='antialiased mx-auto bg-warm-white text-almost-black'>
                 {children}
+                <SanityLive />
+                {isDraftMode && (
+                    <>
+                        <DisableDraftMode />
+                        <VisualEditing />
+                    </>
+                )}
             </body>
         </html>
     );

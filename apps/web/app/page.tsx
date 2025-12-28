@@ -1,12 +1,12 @@
 import Header from '@/components/Header';
 import ScrollingBanner from '@/components/ScrollingBanner';
 import AnimatedHero from '@/components/AnimatedHero';
-import AnimatedFeaturedReview from '@/components/AnimatedFeaturedReview';
 import AnimatedRecentReviews from '@/components/AnimatedRecentReviews';
 import BadgeShowcase from '@/components/BadgeShowcase';
 import AnimatedChipterScale from '@/components/AnimatedChipterScale';
 import SubmitChip from '@/components/SubmitChip';
 import Footer from '@/components/Footer';
+import AnimatedFeaturedReview from '@/components/AnimatedFeaturedReview';
 
 export default function Home() {
     return (
@@ -15,7 +15,7 @@ export default function Home() {
             <ScrollingBanner />
             <main className='w-full'>
                 <AnimatedHero />
-                <AnimatedFeaturedReview />
+                <AnimatedFeaturedReview/>
                 <AnimatedRecentReviews />
                 <BadgeShowcase />
                 <AnimatedChipterScale />
