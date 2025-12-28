@@ -15,13 +15,21 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         >
             {/* Image */}
             <div className='relative aspect-square border-b-[3px] border-almost-black bg-gray/10'>
-                <Image
-                    src={review.imageUrl}
-                    alt={`${review.brand} ${review.name}`}
-                    fill
-                    className='object-cover'
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                />
+                {review.imageUrl ? (
+                    <Image
+                        src={review.imageUrl}
+                        alt={`${review.brand} ${review.name}`}
+                        fill
+                        className='object-cover'
+                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                    />
+                ) : (
+                    <div className='w-full h-full flex items-center justify-center bg-chip-yellow/20'>
+                        <span className='font-mono font-bold text-2xl text-almost-black/30'>
+                            {review.brand?.substring(0, 2).toUpperCase() || 'CH'}
+                        </span>
+                    </div>
+                )}
             </div>
 
             {/* Content */}
