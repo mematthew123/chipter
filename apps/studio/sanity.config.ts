@@ -8,7 +8,7 @@ export default defineConfig({
   title: 'Chipter Studio',
 
   projectId: 'yoeii34u',
-  dataset: 'production',
+  dataset: 'development',
 
   plugins: [structureTool(), visionTool()],
 
