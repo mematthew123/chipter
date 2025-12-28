@@ -105,3 +105,71 @@ export const allReviewsQuery = groq`
     }
   }
 `
+
+// Query for single review by slug
+export const singleReviewQuery = groq`
+  *[_type == "chipReview" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    reviewDate,
+    chipterScore,
+    badge,
+    oneLineVerdict,
+    reviewSummary,
+    reviewContent,
+    scoreBreakdown,
+    pros,
+    cons,
+    bestFor,
+    pairsWellWith,
+    bagSize,
+    pricePoint,
+    purchaseLocation,
+    seoTitle,
+    seoDescription,
+    chipProduct-> {
+      _id,
+      name,
+      slug,
+      flavor,
+      productImage,
+      chipType,
+      description,
+      ingredients,
+      allergens,
+      isLimitedEdition,
+      isDiscontinued,
+      brand-> {
+        _id,
+        name,
+        slug,
+        website,
+        country,
+        description,
+        established
+      }
+    },
+    reviewAuthor-> {
+      _id,
+      name,
+      slug,
+      bio,
+      image
+    },
+    reviewImages[] {
+      caption,
+      alt,
+      asset-> {
+        _id,
+        url
+      }
+    },
+    categories[]-> {
+      _id,
+      title,
+      slug,
+      description
+    }
+  }
+`

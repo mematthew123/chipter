@@ -8,9 +8,12 @@ interface ReviewCardProps {
 }
 
 export default function ReviewCard({ review }: ReviewCardProps) {
+    // Use slug if available, otherwise fall back to id
+    const reviewPath = review.slug ? `/reviews/${review.slug}` : `/reviews/${review.id}`;
+
     return (
         <Link
-            href={`/reviews/${review.id}`}
+            href={reviewPath}
             className='group block bg-warm-white border-[3px] border-almost-black hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--almost-black)] transition-all duration-200'
         >
             {/* Image */}

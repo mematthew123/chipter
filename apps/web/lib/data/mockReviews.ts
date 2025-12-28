@@ -2,6 +2,7 @@ export type BadgeTier = 'seismic' | 'tectonic' | 'epicenter' | 'offChipter' | nu
 
 export interface ChipReview {
   id: string;
+  slug?: string;
   name: string;
   brand: string;
   flavor: string;
@@ -16,6 +17,7 @@ export interface ChipReview {
   overallScore: number;
   badge: BadgeTier;
   reviewText: string;
+  oneLineVerdict?: string;
   reviewDate: Date;
   tags: string[];
 }

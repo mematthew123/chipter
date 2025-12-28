@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type BadgeTier =
   | 'off_the_chipter'
   | 'epicenter_elite'
@@ -44,6 +45,9 @@ export interface SanityScoreBreakdown {
 }
 
 export interface SanityChipReview {
+  reviewContent: any;
+  seoDescription: string;
+  seoTitle: string;
   _id: string;
   title: string;
   slug: {
@@ -99,6 +103,7 @@ export function transformReviewForCard(review: SanityChipReview, imageUrlBuilder
 
   return {
     id: review._id,
+    slug: review.slug.current,
     name: review.chipProduct.name,
     brand: review.chipProduct.brand.name,
     flavor: review.chipProduct.flavor,

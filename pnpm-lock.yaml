@@ -44,6 +44,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@portabletext/react':
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.2.3)
       '@react-email/components':
         specifier: ^1.0.2
         version: 1.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
