@@ -85,11 +85,10 @@ export default function AnimatedChipterScale() {
             {chartInView && (
               <motion.div
                 className='absolute left-0 right-0 border-t-[3px] border-hot-orange border-dashed opacity-60'
-                style={{ bottom: '58%' }}
+                style={{ bottom: '58%', transformOrigin: 'left' }}
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-                style={{ transformOrigin: 'left' }}
               >
                 <motion.span
                   className='absolute -top-6 left-2 font-mono font-bold text-xs uppercase text-hot-orange'
@@ -106,11 +105,10 @@ export default function AnimatedChipterScale() {
             {chartInView && (
               <motion.div
                 className='absolute left-0 right-0 border-t-[3px] border-chip-yellow'
-                style={{ bottom: '70%' }}
+                style={{ bottom: '70%', transformOrigin: 'left' }}
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1.7, ease: "easeOut" }}
-                style={{ transformOrigin: 'left' }}
               >
                 <motion.span
                   className='absolute -top-6 right-2 font-mono font-bold text-xs uppercase text-chip-yellow'
