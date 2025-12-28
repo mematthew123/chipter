@@ -29,14 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
-  // Ensure reviewSummary is a string for metadata
-  const summaryText = typeof review.reviewSummary === 'string'
-    ? review.reviewSummary
-    : Array.isArray(review.reviewSummary)
-      ? review.reviewSummary.map((block: any) =>
-          block.children?.map((child: any) => child.text).join(' ')
-        ).join(' ')
-      : '';
+  // reviewSummary is always a string from Sanity (text field)
+  const summaryText = review.reviewSummary || '';
 
   return {
     title: review.seoTitle || `${review.chipProduct.name} Review | Chipter`,
