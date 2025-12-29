@@ -170,7 +170,9 @@ export const singleReviewQuery = defineQuery(/* groq */ `
       title,
       slug,
       description
-    }
+    },
+    likesEnabled,
+    likeCount
   }
 `)
 
@@ -216,6 +218,8 @@ export const singleBlogPostQuery = defineQuery(/* groq */ `
       title,
       description
     },
-    body
+    body,
+    likesEnabled,
+    likeCount
   }
 `)

@@ -5,6 +5,7 @@ import author from './author'
 import chipBrand from './chipBrand'
 import chipProduct from './chipProduct'
 import chipReview from './chipReview'
+import like from './like'
 
 export const schemaTypes = [
   // Review schemas
@@ -16,4 +17,6 @@ export const schemaTypes = [
   author,
   category,
   blockContent,
+  // Engagement schemas
+  like,
 ]

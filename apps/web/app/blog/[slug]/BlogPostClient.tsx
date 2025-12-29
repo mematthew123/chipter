@@ -6,6 +6,8 @@ import { urlFor } from '@/lib/sanity.live'
 import PortableText from '@/components/PortableText'
 import Image from 'next/image'
 import Link from 'next/link'
+import { LikeButton } from '@/components/LikeButton'
+import { LikeCounter } from '@/components/LikeCounter'
 
 interface BlogPost {
   _id: string
@@ -26,6 +28,8 @@ interface BlogPost {
     description?: string
   }>
   body?: any
+  likesEnabled?: boolean
+  likeCount?: number
 }
 
 interface BlogPostClientProps {
@@ -33,29 +37,6 @@ interface BlogPostClientProps {
 }
 
 // Animation variants with proper types
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 100
-    }
-  }
-}
-
 const heroVariants: Variants = {
   hidden: { opacity: 0, scale: 1.05 },
   visible: {
@@ -180,6 +161,27 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           <div className="prose-brutal">
             {post.body && <PortableText value={post.body} />}
           </div>
+
+          {/* Like Section */}
+          {post.likesEnabled && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5 }}
+              className="mt-12 pt-8 border-t-[3px] border-almost-black"
+            >
+              <div className="flex items-center gap-6">
+                <LikeButton
+                  documentId={post._id}
+                  documentType="post"
+                  initialCount={post.likeCount || 0}
+                />
+                {(post.likeCount || 0) > 0 && (
+                  <LikeCounter count={post.likeCount || 0} />
+                )}
+              </div>
+            </motion.div>
+          )}
         </div>
       </motion.section>
 

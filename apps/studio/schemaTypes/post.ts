@@ -49,6 +49,21 @@ export default defineType({
       title: 'Body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'likesEnabled',
+      title: 'Enable Likes',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Allow users to like this content'
+    }),
+    defineField({
+      name: 'likeCount',
+      title: 'Like Count',
+      type: 'number',
+      initialValue: 0,
+      readOnly: true,
+      description: 'Total number of likes (updated automatically)'
+    }),
   ],
 
   preview: {

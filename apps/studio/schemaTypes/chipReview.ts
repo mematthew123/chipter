@@ -238,6 +238,21 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: {type: 'category'}}],
     }),
+    defineField({
+      name: 'likesEnabled',
+      title: 'Enable Likes',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Allow users to like this review'
+    }),
+    defineField({
+      name: 'likeCount',
+      title: 'Like Count',
+      type: 'number',
+      initialValue: 0,
+      readOnly: true,
+      description: 'Total number of likes (updated automatically)'
+    }),
   ],
   preview: {
     select: {

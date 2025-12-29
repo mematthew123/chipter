@@ -6,6 +6,8 @@ import Link from 'next/link';
 import PortableText from '@/components/PortableText';
 import { urlFor } from '@/lib/sanity.live';
 import { SanityChipReview } from '@/lib/sanity.types';
+import { LikeButton } from '@/components/LikeButton';
+import { LikeCounter } from '@/components/LikeCounter';
 
 // Brutalist animation config
 const brutalSpring = {
@@ -314,12 +316,33 @@ export default function ReviewPageClient({ review }: ReviewPageClientProps) {
             </motion.section>
           )}
 
+          {/* Like Section */}
+          {review.likesEnabled && (
+            <motion.div
+              className='mt-12 pt-8 border-t-[3px] border-almost-black'
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...brutalSpring, delay: 0.6 }}
+            >
+              <div className='flex items-center justify-center gap-6'>
+                <LikeButton
+                  documentId={review._id}
+                  documentType="chipReview"
+                  initialCount={review.likeCount || 0}
+                />
+                {(review.likeCount || 0) > 0 && (
+                  <LikeCounter count={review.likeCount || 0} />
+                )}
+              </div>
+            </motion.div>
+          )}
+
           {/* Back to Reviews */}
           <motion.div
             className='mt-12 text-center'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ ...brutalSpring, delay: 0.6 }}
+            transition={{ ...brutalSpring, delay: 0.7 }}
           >
             <Link
               href='/reviews'
