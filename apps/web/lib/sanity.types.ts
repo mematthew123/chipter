@@ -87,6 +87,8 @@ export interface SanityChipReview {
   bagSize?: string;
   pricePoint?: 'budget' | 'standard' | 'premium' | 'luxury';
   purchaseLocation?: string;
+  likesEnabled?: boolean;
+  likeCount?: number;
 }
 
 // Transform function to convert Sanity data to the component format
