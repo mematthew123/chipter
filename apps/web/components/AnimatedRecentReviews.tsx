@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { sanityFetch } from '@/lib/sanity.live';
-import { urlFor } from '@/lib/sanity.client';
+import { sanityFetch, urlFor } from '@/lib/sanity.live';
 import { recentReviewsQuery } from '@/lib/sanity.queries';
 import { transformReviewForCard } from '@/lib/sanity.types';
 import AnimatedRecentReviewsClient from './AnimatedRecentReviewsClient';

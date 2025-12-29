@@ -4,6 +4,9 @@ import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity/visual-editing';
 import { SanityLive } from '@/lib/sanity.live';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
+import Header from '@/components/Header';
+import ScrollingBanner from '@/components/ScrollingBanner';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -66,7 +69,14 @@ export default async function RootLayout({
             className={`${jetbrainsMono.variable} ${instrumentSerif.variable} ${inter.variable}`}
         >
             <body className='antialiased mx-auto bg-warm-white text-almost-black'>
-                {children}
+                <div className='min-h-dvh bg-warm-white flex flex-col'>
+                    <Header />
+                    <ScrollingBanner />
+                    <main className='flex-1'>
+                        {children}
+                    </main>
+                    <Footer />
+                </div>
                 <SanityLive />
                 {isDraftMode && (
                     <>

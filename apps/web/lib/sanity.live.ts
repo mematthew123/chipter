@@ -2,15 +2,15 @@
 // Using traditional approach for next-sanity v12
 
 import { createClient } from '@sanity/client'
-import { draftMode } from 'next/headers'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'yoeii34u'
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'development'
 const apiVersion = '2024-12-27'
 const token = process.env.SANITY_API_READ_TOKEN
 
-// Create a base client
-const baseClient = createClient({
+// Create a base client - exported for use in generateStaticParams
+export const baseClient = createClient({
   projectId,
   dataset,
   apiVersion,
@@ -39,6 +39,8 @@ export async function sanityFetch<T = unknown>({
   revalidate?: number | false
   stega?: boolean
 }) {
+  // Import draftMode inside the function to avoid client component issues
+  const { draftMode } = await import('next/headers')
   const isDraftMode = (await draftMode()).isEnabled
 
   // Use stega-enabled client when in draft mode for visual editing
@@ -62,4 +64,12 @@ export async function sanityFetch<T = unknown>({
 // Placeholder component - SanityLive features are integrated directly
 export function SanityLive() {
   return null
+}
+
+// Image URL builder
+const builder = createImageUrlBuilder(baseClient)
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function urlFor(source: any) {
+  return builder.image(source)
 }

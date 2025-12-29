@@ -1,17 +1,17 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { client, urlFor } from '@/lib/sanity.client';
+import { sanityFetch, baseClient, urlFor } from '@/lib/sanity.live';
 import { singleReviewQuery, allReviewsQuery } from '@/lib/sanity.queries';
 import { SanityChipReview } from '@/lib/sanity.types';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import ScrollingBanner from '@/components/ScrollingBanner';
+import { draftMode } from 'next/headers';
 import Badge from '@/components/Badge';
 import ReviewPageClient from './review-client';
+import VisualEditRefresh from '@/components/VisualEditRefresh';
 
 // Generate static params for all reviews
 export async function generateStaticParams() {
-  const reviews = await client.fetch<SanityChipReview[]>(allReviewsQuery);
+  // Use baseClient directly to avoid draftMode() during build
+  const reviews = await baseClient.fetch<SanityChipReview[]>(allReviewsQuery);
   return reviews.map((review) => ({
     slug: review.slug.current,
   }));
@@ -20,7 +20,10 @@ export async function generateStaticParams() {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const review = await client.fetch<SanityChipReview>(singleReviewQuery, { slug });
+  const { data: review } = await sanityFetch<SanityChipReview>({
+    query: singleReviewQuery,
+    params: { slug },
+  });
 
   if (!review) {
     return {
@@ -63,7 +66,11 @@ function mapBadgeTier(sanityBadge?: string): 'seismic' | 'tectonic' | 'epicenter
 
 async function fetchReview(slug: string) {
   try {
-    const review = await client.fetch<SanityChipReview>(singleReviewQuery, { slug });
+    const { data: review } = await sanityFetch<SanityChipReview>({
+      query: singleReviewQuery,
+      params: { slug },
+      revalidate: 300, // Revalidate every 5 minutes
+    });
     return review;
   } catch (error) {
     console.error('Error fetching review:', error);
@@ -87,12 +94,10 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
     day: 'numeric',
   });
 
-  return (
-    <div className='min-h-dvh bg-warm-white'>
-      <Header />
-      <ScrollingBanner />
+  const { isEnabled: isDraftMode } = await draftMode();
 
-      <main className='w-full'>
+  return (
+    <div className='w-full'>
         {/* Hero Section */}
         <section className='w-full py-8 px-4 bg-chip-yellow/20 border-b-[3px] border-almost-black'>
           <div className='max-w-7xl mx-auto'>
@@ -181,9 +186,8 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
           review={review}
           badgeTier={badgeTier}
         />
-      </main>
 
-      <Footer />
+      <VisualEditRefresh isDraftMode={isDraftMode} />
     </div>
   );
 }

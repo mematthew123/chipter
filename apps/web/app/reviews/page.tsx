@@ -1,31 +1,31 @@
-import { client, urlFor } from '@/lib/sanity.client';
+import { sanityFetch, urlFor } from '@/lib/sanity.live';
 import { allReviewsQuery } from '@/lib/sanity.queries';
 import { SanityChipReview, transformReviewForCard } from '@/lib/sanity.types';
+import { draftMode } from 'next/headers';
 import ReviewsPageClient from './reviews-client';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import ScrollingBanner from '@/components/ScrollingBanner';
-
-async function fetchAllReviews() {
-  try {
-    const reviews = await client.fetch<SanityChipReview[]>(allReviewsQuery);
-    return reviews.map(review => transformReviewForCard(review, (source) => urlFor(source).url()));
-  } catch (error) {
-    console.error('Error fetching reviews:', error);
-    return [];
-  }
-}
+import ReviewsPageLive from './reviews-live';
+import VisualEditRefresh from '@/components/VisualEditRefresh';
 
 export default async function ReviewsPage() {
-  const reviews = await fetchAllReviews();
+  const { data: reviews } = await sanityFetch<SanityChipReview[]>({
+    query: allReviewsQuery,
+  });
+
+  const transformedReviews = reviews?.map(review =>
+    transformReviewForCard(review, (source) => urlFor(source).url())
+  ) || [];
+
+  const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <div className='min-h-dvh bg-warm-white'>
-      <Header />
-      <ScrollingBanner />
-      <ReviewsPageClient reviews={reviews} />
-      <Footer />
-    </div>
+    <>
+      {isDraftMode ? (
+        <ReviewsPageLive initialReviews={transformedReviews} />
+      ) : (
+        <ReviewsPageClient reviews={transformedReviews} />
+      )}
+      <VisualEditRefresh isDraftMode={isDraftMode} />
+    </>
   );
 }
 

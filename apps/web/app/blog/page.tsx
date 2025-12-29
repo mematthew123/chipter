@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { client } from '@/lib/sanity.client'
+import { sanityFetch, urlFor } from '@/lib/sanity.live'
 import { allBlogPostsQuery } from '@/lib/sanity.queries'
-import { urlFor } from '@/lib/sanity.client'
+import { draftMode } from 'next/headers'
 import Link from 'next/link'
 import Image from 'next/image'
+import VisualEditRefresh from '@/components/VisualEditRefresh'
 
 interface BlogPost {
   _id: string
@@ -25,10 +26,15 @@ interface BlogPost {
 }
 
 export default async function BlogPage() {
-  const posts = await client.fetch<BlogPost[]>(allBlogPostsQuery)
+  const { data: posts } = await sanityFetch<BlogPost[]>({
+    query: allBlogPostsQuery,
+    revalidate: 300, // Revalidate every 5 minutes for blog listing
+  })
+
+  const { isEnabled: isDraftMode } = await draftMode()
 
   return (
-    <main className="min-h-dvh bg-warm-white">
+    <div className="w-full">
       {/* Hero Section */}
       <section className="border-b-[3px] border-almost-black">
         <div className="mx-auto max-w-7xl px-6 py-20">
@@ -172,6 +178,12 @@ export default async function BlogPage() {
           </div>
         )}
       </section>
-    </main>
+      <VisualEditRefresh isDraftMode={isDraftMode} />
+    </div>
   )
+}
+
+export const metadata = {
+  title: 'Blog | Chipter',
+  description: 'Deep dives into crisp culture, flavor physics, and the art of the crunch. Read the latest chip chronicles.',
 }

@@ -19,7 +19,7 @@ export default defineConfig({
       previewUrl: {
         origin: typeof location === 'undefined' ? 'http://localhost:3000' : location.origin,
         previewMode: {
-          enable: '/api/draft-mode/enable',
+          enable: '/api/draft/enable',
         },
       },
     }),

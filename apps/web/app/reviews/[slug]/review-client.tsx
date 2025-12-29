@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import PortableText from '@/components/PortableText';
-import { urlFor } from '@/lib/sanity.client';
+import { urlFor } from '@/lib/sanity.live';
 import { SanityChipReview } from '@/lib/sanity.types';
 
 // Brutalist animation config
