@@ -10,6 +10,17 @@ const brutalSpring = {
   stiffness: 300
 };
 
+// Smoother spring for criteria cards - less stiff, more damped
+const smoothCardSpring = {
+  type: "spring" as const,
+  damping: 30,
+  stiffness: 120,
+  mass: 0.8
+};
+
+// Easing curve for smoother entrances - using built-in easing
+const smoothEasing = "easeOut"; // Smooth deceleration
+
 export default function AnimatedChipterScale() {
   const [hoveredCriteria, setHoveredCriteria] = useState<string | null>(null);
   const chartRef = useRef(null);
@@ -165,37 +176,52 @@ export default function AnimatedChipterScale() {
           </motion.div>
         </div>
 
-        {/* Rating Criteria with stagger animation */}
+        {/* Rating Criteria with smooth stagger animation */}
         <motion.div
           className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4'
           initial='hidden'
           whileInView='visible'
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={{
-            hidden: { opacity: 0 },
+            hidden: { opacity: 1 }, // Container stays visible to prevent layout shift
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
+                staggerChildren: 0.08, // Slightly faster stagger for smoother flow
+                delayChildren: 0.3, // Small delay to let the chart settle first
+                when: "beforeChildren"
               }
             }
           }}
         >
-          {criteria.map((criterion) => (
+          {criteria.map((criterion, index) => (
             <motion.div
               key={criterion.name}
               className='bg-warm-white border-[3px] border-almost-black p-4 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--almost-black)] transition-all duration-200 cursor-pointer'
               onMouseEnter={() => setHoveredCriteria(criterion.name)}
               onMouseLeave={() => setHoveredCriteria(null)}
               variants={{
-                hidden: { opacity: 0, y: 50, rotateY: -90 },
+                hidden: {
+                  opacity: 0,
+                  y: 20, // Reduced from 50 to prevent large jumps
+                  scale: 0.95, // Subtle scale instead of rotateY for smoother GPU acceleration
+                  filter: "blur(4px)" // Adds a subtle blur that clears up on entry
+                },
                 visible: {
                   opacity: 1,
                   y: 0,
-                  rotateY: 0,
-                  transition: brutalSpring
+                  scale: 1,
+                  filter: "blur(0px)",
+                  transition: {
+                    ...smoothCardSpring,
+                    opacity: { duration: 0.4, ease: smoothEasing },
+                    filter: { duration: 0.3, ease: "easeOut" }
+                  }
                 }
+              }}
+              style={{
+                transformOrigin: "center bottom", // Makes the scale/movement feel more grounded
+                willChange: index < 3 ? "transform, opacity, filter" : "auto" // Optimize first few cards
               }}
             >
               <div className='font-mono font-extrabold text-3xl text-hot-orange mb-2'>
@@ -205,13 +231,21 @@ export default function AnimatedChipterScale() {
                 {criterion.name}
               </h3>
               <motion.p
-                className='font-sans text-xs text-gray'
+                className='font-sans text-xs text-gray overflow-hidden'
                 initial={false}
                 animate={{
-                  opacity: hoveredCriteria === criterion.name ? 1 : 0,
-                  height: hoveredCriteria === criterion.name ? 'auto' : 0
+                  opacity: hoveredCriteria === criterion.name ? 1 : 0.7,
+                  height: hoveredCriteria === criterion.name ? 'auto' : 0,
+                  y: hoveredCriteria === criterion.name ? 0 : -5
                 }}
-                transition={{ duration: 0.2 }}
+                transition={{
+                  duration: 0.25,
+                  ease: smoothEasing,
+                  opacity: { duration: 0.15 }
+                }}
+                style={{
+                  transformOrigin: "top",
+                }}
               >
                 {criterion.description}
               </motion.p>
