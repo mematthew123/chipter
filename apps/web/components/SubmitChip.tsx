@@ -7,17 +7,50 @@ export default function SubmitChip() {
         chipName: '',
         brand: '',
         reason: '',
+        email: '',
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
+        type: 'success' | 'error' | null;
+        message: string;
+    }>({ type: null, message: '' });
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        // For now, just log the submission
-        console.log('Chip submission:', formData);
-        // Reset form
-        setFormData({ chipName: '', brand: '', reason: '' });
-        alert(
-            'Chip submitted for review. We take our responsibility seriously.',
-        );
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: '' });
+
+        try {
+            const response = await fetch('/api/submit-chip', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to submit chip');
+            }
+
+            // Success
+            setSubmitStatus({
+                type: 'success',
+                message: data.message || 'Chip submitted for review. We take our responsibility seriously.',
+            });
+            // Reset form
+            setFormData({ chipName: '', brand: '', reason: '', email: '' });
+        } catch (error) {
+            console.error('Submission error:', error);
+            setSubmitStatus({
+                type: 'error',
+                message: error instanceof Error ? error.message : 'Failed to submit. Please try again.',
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -33,6 +66,27 @@ export default function SubmitChip() {
                         put it through rigorous testing.
                     </p>
 
+                    {/* Status Messages */}
+                    {submitStatus.type && (
+                        <div
+                            className={`mb-6 border-[3px] border-almost-black p-4 ${
+                                submitStatus.type === 'success'
+                                    ? 'bg-fresh-green'
+                                    : 'bg-hot-orange'
+                            }`}
+                        >
+                            <p
+                                className={`font-mono font-bold text-sm uppercase ${
+                                    submitStatus.type === 'success'
+                                        ? 'text-almost-black'
+                                        : 'text-warm-white'
+                                }`}
+                            >
+                                {submitStatus.message}
+                            </p>
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit} className='space-y-6'>
                         {/* Chip Name */}
                         <div>
@@ -46,6 +100,7 @@ export default function SubmitChip() {
                                 type='text'
                                 id='chipName'
                                 required
+                                disabled={isSubmitting}
                                 value={formData.chipName}
                                 onChange={(e) =>
                                     setFormData({
@@ -53,7 +108,7 @@ export default function SubmitChip() {
                                         chipName: e.target.value,
                                     })
                                 }
-                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2'
+                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2 disabled:opacity-50'
                                 placeholder='e.g., Cool Ranch'
                             />
                         </div>
@@ -70,6 +125,7 @@ export default function SubmitChip() {
                                 type='text'
                                 id='brand'
                                 required
+                                disabled={isSubmitting}
                                 value={formData.brand}
                                 onChange={(e) =>
                                     setFormData({
@@ -77,8 +133,33 @@ export default function SubmitChip() {
                                         brand: e.target.value,
                                     })
                                 }
-                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2'
+                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2 disabled:opacity-50'
                                 placeholder='e.g., Doritos'
+                            />
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                            <label
+                                htmlFor='email'
+                                className='block font-mono font-bold text-sm uppercase tracking-wider text-almost-black mb-2'
+                            >
+                                YOUR EMAIL *
+                            </label>
+                            <input
+                                type='email'
+                                id='email'
+                                required
+                                disabled={isSubmitting}
+                                value={formData.email}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        email: e.target.value,
+                                    })
+                                }
+                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2 disabled:opacity-50'
+                                placeholder='you@example.com'
                             />
                         </div>
 
@@ -93,6 +174,7 @@ export default function SubmitChip() {
                             <textarea
                                 id='reason'
                                 rows={4}
+                                disabled={isSubmitting}
                                 value={formData.reason}
                                 onChange={(e) =>
                                     setFormData({
@@ -100,7 +182,7 @@ export default function SubmitChip() {
                                         reason: e.target.value,
                                     })
                                 }
-                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2 resize-none'
+                                className='w-full px-4 py-3 border-[3px] border-almost-black bg-warm-white font-sans text-almost-black placeholder-gray focus:outline-none focus:ring-[3px] focus:ring-hot-orange focus:ring-offset-2 resize-none disabled:opacity-50'
                                 placeholder='Make your case. Be compelling.'
                             />
                         </div>
@@ -108,9 +190,10 @@ export default function SubmitChip() {
                         {/* Submit Button */}
                         <button
                             type='submit'
-                            className='w-full md:w-auto font-mono font-bold uppercase tracking-wide px-8 py-4 bg-hot-orange text-warm-white border-[3px] border-almost-black hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0_var(--almost-black)] transition-all duration-200'
+                            disabled={isSubmitting}
+                            className='w-full md:w-auto font-mono font-bold uppercase tracking-wide px-8 py-4 bg-hot-orange text-warm-white border-[3px] border-almost-black hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0_var(--almost-black)] transition-all duration-200 disabled:opacity-50 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-none'
                         >
-                            SUBMIT FOR REVIEW
+                            {isSubmitting ? 'SUBMITTING...' : 'SUBMIT FOR REVIEW'}
                         </button>
                     </form>
 
