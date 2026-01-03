@@ -5,7 +5,7 @@ import { baseClient as client } from '@/lib/sanity.live';
 // DELETE /api/comments/[id] - Delete a comment
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify user is authenticated
@@ -17,7 +17,7 @@ export async function DELETE(
       );
     }
 
-    const commentId = params.id;
+    const { id: commentId } = await params;
 
     // Fetch the comment to verify ownership
     const comment = await client.fetch(
@@ -62,7 +62,7 @@ export async function DELETE(
 // PATCH /api/comments/[id] - Update a comment (for future edit functionality)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify user is authenticated
@@ -74,7 +74,7 @@ export async function PATCH(
       );
     }
 
-    const commentId = params.id;
+    const { id: commentId } = await params;
     const { content } = await request.json();
 
     if (!content) {

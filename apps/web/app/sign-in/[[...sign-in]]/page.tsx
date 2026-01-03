@@ -11,7 +11,7 @@ export default function SignInPage() {
                         Welcome Back
                     </h1>
                     <p className='font-serif italic text-lg text-gray'>
-                        "Your chips await your judgment."
+                        &quot;Your chips await your judgment.&quot;
                     </p>
                 </div>
 
@@ -24,7 +24,7 @@ export default function SignInPage() {
                 <div className='mt-8 text-center'>
                     <div className='inline-block border-t-[3px] border-almost-black pt-4'>
                         <p className='font-mono text-xs uppercase tracking-wider text-gray'>
-                            Serious about snacks since 2024
+                            Serious about snacks since 2026
                         </p>
                     </div>
                 </div>

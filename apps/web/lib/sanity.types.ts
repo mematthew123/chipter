@@ -89,6 +89,7 @@ export interface SanityChipReview {
   purchaseLocation?: string;
   likesEnabled?: boolean;
   likeCount?: number;
+  commentsEnabled?: boolean;
 }
 
 // Transform function to convert Sanity data to the component format

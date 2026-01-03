@@ -176,7 +176,7 @@ export default function Footer() {
                 <div className='border-t-[3px] border-warm-white/20 mt-8 pt-6'>
                     <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
                         <div className='font-mono text-xs uppercase tracking-wider text-warm-white/60'>
-                            © 2025 CHIPTER. ALL CHIPS RESERVED.
+                            © 2026 CHIPTER. ALL CHIPS RESERVED.
                         </div>
                         <div className='flex gap-6'>
                             <Link

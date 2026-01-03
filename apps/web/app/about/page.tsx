@@ -32,7 +32,7 @@ export default function AboutPage() {
                                 We eat chips so you don&apos;t have to eat bad ones. Every bag undergoes rigorous scientific evaluation. No chip escapes our scrutiny.
                             </p>
                             <p>
-                                Since 2025, we&apos;ve been quantifying what others call subjective. Crunch can be measured. Flavor has metrics. Even disappointment has a number.
+                                Since 2026, we&apos;ve been quantifying what others call subjective. Crunch can be measured. Flavor has metrics. Even disappointment has a number.
                             </p>
                             <p className='font-serif italic text-xl mt-6'>
                                 &quot;We take chips seriously because someone has to.&quot;
