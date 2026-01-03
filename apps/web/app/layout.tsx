@@ -8,6 +8,7 @@ import { DisableDraftMode } from '@/components/DisableDraftMode';
 import Header from '@/components/Header';
 import ScrollingBanner from '@/components/ScrollingBanner';
 import Footer from '@/components/Footer';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -79,6 +80,7 @@ export default async function RootLayout({
                         </main>
                         <Footer />
                     </div>
+                    <GoogleAnalytics />
                     <SanityLive />
                     {isDraftMode && (
                         <>
