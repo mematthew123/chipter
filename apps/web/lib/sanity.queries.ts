@@ -172,7 +172,8 @@ export const singleReviewQuery = defineQuery(/* groq */ `
       description
     },
     likesEnabled,
-    likeCount
+    likeCount,
+    commentsEnabled
   }
 `)
 

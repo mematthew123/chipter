@@ -253,6 +253,13 @@ export default defineType({
       readOnly: true,
       description: 'Total number of likes (updated automatically)'
     }),
+    defineField({
+      name: 'commentsEnabled',
+      title: 'Enable Comments',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Allow users to comment on this review',
+    }),
   ],
   preview: {
     select: {

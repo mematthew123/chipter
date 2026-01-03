@@ -7,6 +7,8 @@ import { draftMode } from 'next/headers';
 import Badge from '@/components/Badge';
 import ReviewPageClient from './review-client';
 import VisualEditRefresh from '@/components/VisualEditRefresh';
+import Comments from '@/components/comments/Comments';
+import { getComments } from '@/lib/comments';
 
 // Generate static params for all reviews
 export async function generateStaticParams() {
@@ -95,6 +97,9 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
   });
 
   const { isEnabled: isDraftMode } = await draftMode();
+
+  // Fetch comments for this review
+  const comments = review.commentsEnabled ? await getComments(review._id, 'chipReview') : [];
 
   return (
     <div className='w-full'>
@@ -186,6 +191,17 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
           review={review}
           badgeTier={badgeTier}
         />
+
+        {/* Comments Section */}
+        {review.commentsEnabled && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <Comments
+              parentId={review._id}
+              parentType="chipReview"
+              initialComments={comments}
+            />
+          </section>
+        )}
 
       <VisualEditRefresh isDraftMode={isDraftMode} />
     </div>
