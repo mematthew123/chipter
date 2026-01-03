@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, FormEvent } from 'react';
+import { gaEvents } from '@/hooks/useGoogleAnalytics';
 
 export default function Footer() {
     const [email, setEmail] = useState('');
@@ -33,6 +34,9 @@ export default function Footer() {
             setStatus('success');
             setMessage('Welcome aboard. Check your email.');
             setEmail('');
+
+            // Track successful newsletter signup
+            gaEvents.newsletterSignup('footer');
 
             // Reset success message after 5 seconds
             setTimeout(() => {

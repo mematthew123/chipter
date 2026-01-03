@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import ScrollingBanner from '@/components/ScrollingBanner';
 import Footer from '@/components/Footer';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import PageViewTracker from '@/components/PageViewTracker';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -81,6 +82,7 @@ export default async function RootLayout({
                         <Footer />
                     </div>
                     <GoogleAnalytics />
+                    <PageViewTracker />
                     <SanityLive />
                     {isDraftMode && (
                         <>
