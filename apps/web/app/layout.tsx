@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { JetBrains_Mono, Instrument_Serif, Inter } from 'next/font/google';
 import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity/visual-editing';
+import { ClerkProvider } from '@clerk/nextjs';
 import { SanityLive } from '@/lib/sanity.live';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
 import Header from '@/components/Header';
@@ -64,27 +65,29 @@ export default async function RootLayout({
     const isDraftMode = (await draftMode()).isEnabled;
 
     return (
-        <html
-            lang='en'
-            className={`${jetbrainsMono.variable} ${instrumentSerif.variable} ${inter.variable}`}
-        >
-            <body className='antialiased mx-auto bg-warm-white text-almost-black'>
-                <div className='min-h-dvh bg-warm-white flex flex-col'>
-                    <Header />
-                    <ScrollingBanner />
-                    <main className='flex-1'>
-                        {children}
-                    </main>
-                    <Footer />
-                </div>
-                <SanityLive />
-                {isDraftMode && (
-                    <>
-                        <DisableDraftMode />
-                        <VisualEditing />
-                    </>
-                )}
-            </body>
-        </html>
+        <ClerkProvider>
+            <html
+                lang='en'
+                className={`${jetbrainsMono.variable} ${instrumentSerif.variable} ${inter.variable}`}
+            >
+                <body className='antialiased mx-auto bg-warm-white text-almost-black'>
+                    <div className='min-h-dvh bg-warm-white flex flex-col'>
+                        <Header />
+                        <ScrollingBanner />
+                        <main className='flex-1'>
+                            {children}
+                        </main>
+                        <Footer />
+                    </div>
+                    <SanityLive />
+                    {isDraftMode && (
+                        <>
+                            <DisableDraftMode />
+                            <VisualEditing />
+                        </>
+                    )}
+                </body>
+            </html>
+        </ClerkProvider>
     );
 }
